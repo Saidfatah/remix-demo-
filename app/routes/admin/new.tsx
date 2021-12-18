@@ -1,5 +1,5 @@
 import { redirect, Form,ActionFunction,useTransition } from "remix";
-import { createPost,PostMarkdownAttributes } from "../../post";
+import { createPost } from "../../post";
 import invariant from "tiny-invariant";
 
 type PostError = {

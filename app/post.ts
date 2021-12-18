@@ -5,9 +5,9 @@ import invariant from "tiny-invariant";
 import { marked } from "marked";
 
 type NewPost = {
-  title: string;
-  slug: string;
-  markdown: string;
+  title?: string;
+  slug?: string;
+  markdown?: string;
 };
 export type Post = {
     slug: string;
@@ -47,7 +47,6 @@ export async function  getPosts() {
     );
 }
 export async function getPost(slug: string) {
-  console.log('called')
   const filepath = path.join(postsPath, slug + ".md");
   const file = await fs.readFile(filepath);
   const { attributes,body } = parseFrontMatter(file.toString());
@@ -57,12 +56,12 @@ export async function getPost(slug: string) {
   );
   const html = marked(body);
   return { slug, html, title: attributes.title };
-}
+} 
 export async function createPost(post:NewPost) {
   const md = `---\ntitle: ${post.title}\n---\n\n${post.markdown}`;
   await fs.writeFile(
     path.join(postsPath, post.slug + ".md"),
     md
   );
-  return getPost(post.slug);
+  return getPost(post.slug || '');
 } 
